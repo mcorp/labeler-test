@@ -14,7 +14,7 @@ jobs:
       id: checkUserMember
       with:
         username: ${{ github.event.sender.login }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # needs org:read permission
+        GITHUB_TOKEN: ${{ secrets.CO1_AUTO_APPROVE_TOKEN }} # needs org:read permission
     - uses: actions/labeler@v4
       if: ${{ github.event.label.name == 'data migration' && !contains(steps.checkUserMember.outputs.teams, 'test-team') }}
       with:
