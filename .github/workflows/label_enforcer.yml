@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: tspascoal/get-user-teams-membership@v2
+      id: checkUserMember
       with:
         username: ${{ github.event.sender.login }}
-        team: 'test-team'
         GITHUB_TOKEN: ${{ secrets.CO1_AUTO_APPROVE_TOKEN }} # needs org:read permission
     - uses: actions/labeler@v4
-      if: ${{ github.event.action == 'unlabeled' && github.event.label.name == 'data migration' && steps.checkUserMember.outputs.isTeamMember == 'false' }}
+      if: ${{ github.event.action == 'unlabeled' && github.event.label.name == 'data migration' && !contains(steps.checkUserMember.outputs.teams, 'test-team') }}
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
