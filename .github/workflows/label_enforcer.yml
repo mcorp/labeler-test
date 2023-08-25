@@ -10,12 +10,11 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: marcocarvalho/get-user-teams-membership@v2
+    - uses: marcocarvalho/team-membership@v1
       id: checkUserMember
       with:
         username: ${{ github.event.sender.login }}
-        GITHUB_TOKEN: ${{ secrets.CO1_AUTO_APPROVE_TOKEN }} # needs org:read permission
     - uses: actions/labeler@v4
-      if: ${{ github.event.label.name == 'data migration' && !contains(steps.checkUserMember.outputs.teams, 'test-team') }}
+      if: ${{ github.event.label.name == 'data migration' && steps.checkUserMember.outputs.isTeamMember == 'false' }}
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
