@@ -10,7 +10,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: marcocarvalho/team-membership@v1
+    - uses: marcocarvalho/team-membership@v3
       id: checkUserMember
       with:
         username: ${{ github.event.sender.login }}
